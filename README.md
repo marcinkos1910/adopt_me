@@ -17,3 +17,11 @@ npm view eslint version
 # npm view <package name> version
 # npm view <package name> version
 ```
+
+example of supported browsers [link]()
+```json
+{
+    "browserslist": ["last 2 version", "not dead"]
+}
+
+```
