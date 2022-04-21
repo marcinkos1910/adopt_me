@@ -7,6 +7,7 @@
 - SPA - single page application
 - PWA - progresive web apps
 - SSR - server side rendering
+- Memoizing - cache function result instead cal it twice with the same parameters, only for pure functions and limited combination of parameters value
 
 ## Tools
 - Prettier - code formatter [Link](https://www.npmjs.com/package/prettier)
