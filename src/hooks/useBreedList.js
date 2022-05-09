@@ -21,7 +21,7 @@ function useBreedList(animal){
         setBreedList([]);
         const response = await fetch(`http://pets-v2.dev-apis.com/breeds?animal=${animal}`)
     
-        const data = await response.json();
+        const data = await response.json();     // convert json to js
         localCache[animal] = data.breeds || [];
         setBreedList(localCache[animal]);
         setStatus("loaded")
