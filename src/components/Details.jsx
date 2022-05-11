@@ -4,6 +4,8 @@ import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
 import Modal from "./Modal";
+
+
 // import { useParams } from "react-router-dom";
 
 // class Details extends React.Component {
@@ -51,7 +53,7 @@ class Details extends Component {
                     <ThemeContext.Consumer>
                         {
                             ([theme]) => (
-                                <button style={{ backgroundColor: theme }} onClick={this.toggleModal}>Adopt { name }!</button>                        
+                                <button style={{ backgroundColor: theme }} onClick={this.toggleModal}>Adopt { name } :&#41;</button>                        
                             )
                         }
                     </ThemeContext.Consumer>

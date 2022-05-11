@@ -2,13 +2,15 @@ import { useState, useEffect, useContext } from "react";
 import useBreedList from "../hooks/useBreedList";
 import Results from "./Results";
 import ThemeContext from "./ThemeContext";
+import { useSearchParams } from "react-router-dom";
 
 const animals = ["bird", "cat", "dog", "rabbit", "reptile"]
 
 function searchParams(){
-    const [location, setLocation] = useState("");
-    const [animal, setAnimal] = useState("");
-    const [breed, setBreed] = useState("");
+    const [searchParams, setSearchParams] = useSearchParams();
+    const [location, setLocation] = useState(searchParams.get("location") || "");
+    const [animal, setAnimal] = useState(searchParams.get("animal") || "");
+    const [breed, setBreed] = useState(searchParams.get("breed") || "");
     const [pets, setPets] = useState([]);
     const [breeds] = useBreedList(animal);
     const [theme, setTheme] = useContext(ThemeContext);
@@ -16,6 +18,10 @@ function searchParams(){
     useEffect(() => {
         requestPets().catch(() => {});
     }, []);
+
+    useEffect(() => {
+
+    }, [searchParams])
 
     async function requestPets() {
         const response = await fetch(`http://pets-v2.dev-apis.com/pets?animal=${animal}&location=${location}&breed=${breed}`);
@@ -28,6 +34,11 @@ function searchParams(){
         event.preventDefault();
 
         requestPets().catch(() => {});
+        const queryParams = {};
+        if (location) queryParams.location = location;
+        if (animal) queryParams.animal = animal;
+        if (location) queryParams.breed = breed;
+        setSearchParams(queryParams);
     }
 
     return (
