@@ -2,6 +2,7 @@ import { Component } from "react";
 import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
+import ThemeContext from "./ThemeContext";
 // import { useParams } from "react-router-dom";
 
 // class Details extends React.Component {
@@ -34,12 +35,19 @@ class Details extends Component {
             return (<h2>Loading</h2>)
         }
         const {animal, name, breed, city, description, state, images} = this.state;
+        
         return (
             <div className="details">
                 <div>
                     <h1>{name}</h1>
                     <h2>{animal} - {breed} - {city} - {state}</h2>
-                    <button>Adopt me!</button>
+                    <ThemeContext.Consumer>
+                        {
+                            ([theme]) => (
+                                <button style={{ backgroundColor: theme }}>Adopt { name }!</button>                        
+                            )
+                        }
+                    </ThemeContext.Consumer>
                     <p>{description}</p>
                 </div>
                 <Carousel images={images}/>
