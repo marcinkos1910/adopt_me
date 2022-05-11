@@ -3,6 +3,7 @@ import { useParams } from "react-router-dom";
 import Carousel from "./Carousel";
 import ErrorBoundary from "./ErrorBoundary";
 import ThemeContext from "./ThemeContext";
+import Modal from "./Modal";
 // import { useParams } from "react-router-dom";
 
 // class Details extends React.Component {
@@ -19,7 +20,8 @@ import ThemeContext from "./ThemeContext";
 
 class Details extends Component {
     state = {
-        loading: true
+        loading: true,
+        showModal: false
     }
 
     async componentDidMount() {
@@ -30,11 +32,16 @@ class Details extends Component {
         // this.setState({loading: false, ...(data.pets[0])});
         this.setState(Object.assign({loading: false}, data.pets[0]));
     }
+
+    toggleModal = () => {
+        this.setState({showModal: !this.state.showModal});
+    }
+
     render() {
         if (this.state.loading){
             return (<h2>Loading</h2>)
         }
-        const {animal, name, breed, city, description, state, images} = this.state;
+        const {animal, name, breed, city, description, state, images, showModal} = this.state;
         
         return (
             <div className="details">
@@ -44,11 +51,24 @@ class Details extends Component {
                     <ThemeContext.Consumer>
                         {
                             ([theme]) => (
-                                <button style={{ backgroundColor: theme }}>Adopt { name }!</button>                        
+                                <button style={{ backgroundColor: theme }} onClick={this.toggleModal}>Adopt { name }!</button>                        
                             )
                         }
                     </ThemeContext.Consumer>
                     <p>{description}</p>
+                    {
+                        showModal ? (
+                            <Modal>
+                                <div>
+                                    <h2>Would you like to adopt {name}?</h2>
+                                    <div className="buttons">
+                                        <a href="https://bit.ly/pet-adopt">Yes</a>
+                                        <button onClick={this.toggleModal}>No</button>
+                                    </div>
+                                </div>
+                            </Modal>
+                        ) : null
+                    }
                 </div>
                 <Carousel images={images}/>
             </div>
